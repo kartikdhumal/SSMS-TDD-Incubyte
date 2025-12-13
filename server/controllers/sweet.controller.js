@@ -142,5 +142,15 @@ const purchaseSweet = async (req, res) => {
   }
 };
 
+const restockSweet = async (req, res) => {
+  const sweet = await Sweet.findById(req.params.id);
+  if (!sweet) return res.status(404).json({ message: 'Sweet not found' });
 
-module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet , searchSweets, purchaseSweet };
+  sweet.quantity += req.body.quantity;
+  await sweet.save();
+
+  return res.status(200).json(sweet);
+};
+
+
+module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet , searchSweets, purchaseSweet , restockSweet };
