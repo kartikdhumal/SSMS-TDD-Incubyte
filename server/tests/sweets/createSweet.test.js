@@ -68,4 +68,31 @@ describe('POST /api/sweets', () => {
 
         expect(res.statusCode).toBe(403);
     });
+
+    it('should fail if name missing', async () => {
+        const res = await request(app)
+            .post('/api/sweets')
+            .set('Authorization', `Bearer ${adminToken}`)
+            .send({
+                price: 50,
+                quantity: 10,
+                category: 'Milk'
+            });
+
+        expect(res.statusCode).toBe(400);
+    });
+
+    it('should fail if price is negative', async () => {
+        const res = await request(app)
+            .post('/api/sweets')
+            .set('Authorization', `Bearer ${adminToken}`)
+            .send({
+                name: 'Ladoo',
+                price: -10,
+                quantity: 10,
+                category: 'Traditional'
+            });
+
+        expect(res.statusCode).toBe(400);
+    });
 });
