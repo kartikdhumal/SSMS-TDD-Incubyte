@@ -1,0 +1,45 @@
+require('dotenv').config({ path: '.env' });
+const request = require('supertest');
+const app = require('../../app');
+const connectDB = require('../../config/db');
+const { default: mongoose } = require('mongoose');
+const User = require('../../models/user.model');
+
+beforeAll(async () => {
+  await connectDB();
+});
+
+beforeEach(async () => {
+  await User.deleteMany({});
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
+});
+
+describe('POST /api/auth/login', () => {
+  it('should login user and return token', async () => {
+    await request(app).post('/api/auth/register').send({
+      name: 'Kartik',
+      email: 'kartik@test.com',
+      password: '123456',
+    });
+
+    const res = await request(app).post('/api/auth/login').send({
+      email: 'kartik@test.com',
+      password: '123456',
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('token');
+  });
+
+  it('should not login with wrong password', async () => {
+    const res = await request(app).post('/api/auth/login').send({
+      email: 'kartik@test.com',
+      password: 'wrong',
+    });
+
+    expect(res.statusCode).toBe(401);
+  });
+});
