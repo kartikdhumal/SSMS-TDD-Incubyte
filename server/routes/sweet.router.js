@@ -6,5 +6,6 @@ const { isAdmin } = require('../middleware/admin.middleware');
 const router = express.Router();
 
 router.post('/', protect, isAdmin, sweetController.createSweet);
+router.get('/', sweetController.getAllSweets);
 
 module.exports = router;
