@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/', protect, isAdmin, sweetController.createSweet);
 router.get('/', protect, isAdmin, sweetController.getAllSweets);
+router.put('/:id', sweetController.updateSweet);
 
 module.exports = router;

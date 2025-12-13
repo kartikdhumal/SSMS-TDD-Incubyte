@@ -44,4 +44,33 @@ const getAllSweets = async (req, res) => {
   }
 };
 
-module.exports = { createSweet, getAllSweets };
+const updateSweet = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const sweet = await Sweet.findById(id);
+    if (!sweet) {
+      return res.status(404).json({ message: 'Sweet not found' });
+    }
+
+    if (req.body.price !== undefined) {
+      sweet.price = req.body.price;
+    }
+
+    if (req.body.quantity !== undefined) {
+      sweet.quantity = req.body.quantity;
+    }
+
+    if (sweet.price < 0 || sweet.quantity < 0) {
+      return res.status(400).json({ message: 'Invalid price or quantity' });
+    }
+
+    await sweet.save();
+
+    return res.status(200).json(sweet);
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = { createSweet, getAllSweets, updateSweet };
