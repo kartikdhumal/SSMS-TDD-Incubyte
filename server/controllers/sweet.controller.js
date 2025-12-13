@@ -46,29 +46,28 @@ const getAllSweets = async (req, res) => {
 
 const updateSweet = async (req, res) => {
   try {
-    const { id } = req.params;
+    const sweet = await Sweet.findById(req.params.id);
+    if (!sweet) return res.status(404).json({ message: 'Sweet not found' });
 
-    const sweet = await Sweet.findById(id);
-    if (!sweet) {
-      return res.status(404).json({ message: 'Sweet not found' });
-    }
+    const { name, category, price, quantity, image, description } = req.body;
 
-    if (req.body.price !== undefined) {
-      sweet.price = req.body.price;
-    }
+    if (price !== undefined && price < 0)
+      return res.status(400).json({ message: 'Invalid price' });
 
-    if (req.body.quantity !== undefined) {
-      sweet.quantity = req.body.quantity;
-    }
+    if (quantity !== undefined && quantity < 0)
+      return res.status(400).json({ message: 'Invalid quantity' });
 
-    if (sweet.price < 0 || sweet.quantity < 0) {
-      return res.status(400).json({ message: 'Invalid price or quantity' });
-    }
+    if (name !== undefined) sweet.name = name.trim();
+    if (category !== undefined) sweet.category = category.trim();
+    if (price !== undefined) sweet.price = price;
+    if (quantity !== undefined) sweet.quantity = quantity;
+    if (image !== undefined) sweet.image = image;
+    if (description !== undefined) sweet.description = description;
 
     await sweet.save();
-
     return res.status(200).json(sweet);
-  } catch (error) {
+
+  } catch (err) {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

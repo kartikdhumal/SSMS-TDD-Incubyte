@@ -74,6 +74,6 @@ describe('PUT /api/sweets/:id', () => {
       .send({ price: -10 });
 
     expect(res.statusCode).toBe(400);
-    expect(res.body.message).toBe('Invalid price or quantity');
+    expect(res.body.message).toBe('Invalid price');
   });
 });
