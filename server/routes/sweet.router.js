@@ -1,9 +1,10 @@
 const express = require('express');
 const sweetController = require('../controllers/sweet.controller');
 const { protect } = require('../middleware/auth.middleware');
+const { isAdmin } = require('../middleware/admin.middleware');
 
 const router = express.Router();
 
-router.post('/', protect, sweetController.createSweet);
+router.post('/', protect, isAdmin, sweetController.createSweet);
 
 module.exports = router;
