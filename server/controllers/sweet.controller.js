@@ -111,5 +111,21 @@ const searchSweets = async (req, res) => {
   }
 };
 
+const purchaseSweet = async (req, res) => {
+  const sweet = await Sweet.findById(req.params.id);
 
-module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet , searchSweets };
+  if (!sweet) {
+    return res.status(404).json({ message: 'Sweet not found' });
+  }
+
+  if (sweet.quantity <= 0) {
+    return res.status(400).json({ message: 'Sweet out of stock' });
+  }
+
+  sweet.quantity -= 1;
+  await sweet.save();
+
+  return res.status(200).json({ message: 'Sweet purchased successfully' });
+};
+
+module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet , searchSweets, purchaseSweet };

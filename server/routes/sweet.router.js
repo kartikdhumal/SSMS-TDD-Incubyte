@@ -10,6 +10,6 @@ router.get('/', protect, isAdmin, sweetController.getAllSweets);
 router.put('/:id', protect, isAdmin, sweetController.updateSweet);
 router.delete('/:id', protect, isAdmin, sweetController.deleteSweet);
 router.get('/search', protect, sweetController.searchSweets);
+router.post('/:id/purchase', protect, sweetController.purchaseSweet);
 
 module.exports = router;
-    
