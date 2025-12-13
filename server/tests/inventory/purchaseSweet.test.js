@@ -40,10 +40,12 @@ afterAll(async () => {
 });
 
 describe('POST /api/sweets/:id/purchase', () => {
+
   it('should purchase sweet and decrease quantity', async () => {
     const res = await request(app)
       .post(`/api/sweets/${sweetId}/purchase`)
-      .set('Authorization', `Bearer ${userToken}`);
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ quantity: 1 });
 
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe('Sweet purchased successfully');
@@ -52,22 +54,26 @@ describe('POST /api/sweets/:id/purchase', () => {
     expect(updatedSweet.quantity).toBe(0);
   });
 
-  it('should not allow purchase when quantity is 0', async () => {
-    await Sweet.findByIdAndUpdate(sweetId, { quantity: 0 });
+  it('should not allow purchase when requested quantity exceeds stock', async () => {
+    await Sweet.findByIdAndUpdate(sweetId, { quantity: 1 });
 
     const res = await request(app)
       .post(`/api/sweets/${sweetId}/purchase`)
-      .set('Authorization', `Bearer ${userToken}`);
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ quantity: 2 });
 
     expect(res.statusCode).toBe(400);
-    expect(res.body.message).toBe('Sweet out of stock');
+    expect(res.body.message).toBe('Insufficient stock');
   });
 
   it('should return 404 if sweet not found', async () => {
     const res = await request(app)
-      .post('/api/sweets/64cb1234567890abcdef9999/purchase')
-      .set('Authorization', `Bearer ${userToken}`);
+      .post('/api/sweets/64cb1234567890abcdef9919/purchase')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ quantity: 1 });
 
     expect(res.statusCode).toBe(404);
   });
+
 });
+
