@@ -9,6 +9,7 @@ router.post('/', protect, isAdmin, sweetController.createSweet);
 router.get('/', protect, isAdmin, sweetController.getAllSweets);
 router.put('/:id', protect, isAdmin, sweetController.updateSweet);
 router.delete('/:id', protect, isAdmin, sweetController.deleteSweet);
-router.get('/search', sweetController.searchSweets);
+router.get('/search', protect, sweetController.searchSweets);
 
 module.exports = router;
+    
