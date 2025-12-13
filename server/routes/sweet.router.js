@@ -8,6 +8,6 @@ const router = express.Router();
 router.post('/', protect, isAdmin, sweetController.createSweet);
 router.get('/', protect, isAdmin, sweetController.getAllSweets);
 router.put('/:id', protect, isAdmin, sweetController.updateSweet);
-router.delete('/:id', sweetController.deleteSweet);
-    
+router.delete('/:id', protect, isAdmin, sweetController.deleteSweet);
+
 module.exports = router;
