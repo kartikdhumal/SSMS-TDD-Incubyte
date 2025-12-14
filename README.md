@@ -31,9 +31,9 @@ A full-stack Sweet Shop Management System where:
 
 ## Folder Structure
 
-### Frontend
+### Backend
 ```
-client/
+server/
 ├── src/
 │ ├── config/ 
 │ ├── controllers/
@@ -46,9 +46,9 @@ client/
 ├── .env
 └── package.json
 ```
-### Backend
+### Frontend
 ```
-server/
+client/
 ├── public/
 ├── src/
 │ ├── assets/
