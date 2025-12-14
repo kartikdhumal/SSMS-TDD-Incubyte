@@ -1,10 +1,16 @@
-function App() {
+import { AuthProvider } from "./context/AuthContext";
+import ErrorBoundary from "./components/ErrorBoundary";
+import AppRoutes from "./routes/AppRoutes";
+import { BrowserRouter } from "react-router-dom";
 
+export default function App() {
   return (
-   <div className="bg-red-700">
-    SSMS TDD Incubyte
-   </div>
-  )
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
+  );
 }
-
-export default App

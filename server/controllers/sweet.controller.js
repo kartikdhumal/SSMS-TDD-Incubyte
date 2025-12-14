@@ -167,4 +167,4 @@ const restockSweet = async (req, res) => {
   }
 };
 
-module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet , searchSweets, purchaseSweet , restockSweet };
+module.exports = { createSweet, getAllSweets, updateSweet, deleteSweet, searchSweets, purchaseSweet, restockSweet };
