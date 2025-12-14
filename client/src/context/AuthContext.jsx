@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { makeToast } from "../utils/utils";
 
 const AuthContext = createContext();
 
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.clear();
+    makeToast("Logged out successfully", "success");
     setUser(null);
   };
 

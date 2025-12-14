@@ -3,6 +3,8 @@ import { getAllSweets, deleteSweet, restockSweet, createSweet, updateSweet, sear
 import Input from "../../components/ui/Input";
 import Select from "../../components/ui/Select";
 import Button from "../../components/ui/Button";
+import Navbar from "../../components/layout/Navbar";
+import { makeToast } from "../../utils/utils";
 
 const Modal = ({ title, children, isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -146,7 +148,7 @@ export default function AdminDashboard() {
       setIsDeleteModalOpen(false);
       fetchSweets(filters);
     } catch (error) {
-      alert("Deletion failed! Check backend auth/logs.");
+      makeToast("Deletion failed! Check backend auth/logs.", "error");
     }
   };
 
@@ -155,7 +157,7 @@ export default function AdminDashboard() {
     const quantity = Number(restockQty);
 
     if (quantity <= 0 || !Number.isInteger(quantity)) {
-      alert("Please enter a valid positive integer quantity.");
+      makeToast("Please enter a valid positive integer quantity.", "error");
       return;
     }
 
@@ -167,7 +169,7 @@ export default function AdminDashboard() {
       setRestockQty("");
       fetchSweets(filters);
     } catch (error) {
-      alert("Restock failed! Check backend auth/logs.");
+      makeToast("Restock failed! Check backend auth/logs.", "error");
     }
   };
 
@@ -197,7 +199,7 @@ export default function AdminDashboard() {
 
     try {
       if (!editForm.name || !editForm.category || editForm.price === undefined || editForm.price < 0) {
-        alert("Name, Category, and a non-negative Price are required.");
+        makeToast("Name, Category, and a non-negative Price are required.");
         return;
       }
 
@@ -211,7 +213,7 @@ export default function AdminDashboard() {
       fetchSweets(filters);
     } catch (error) {
       const message = error.response?.data?.message || `Failed to ${selectedSweet ? 'update' : 'create'} sweet.`;
-      alert(message);
+      makeToast(message, "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -236,6 +238,8 @@ export default function AdminDashboard() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="w-full p-6 bg-gray-900 min-h-screen text-white">
       <div className="flex justify-between items-center mb-6 border-b-2 border-gray-700 pb-4">
         <h1 className="text-3xl font-extrabold text-cyan-400">Sweets Management</h1>
@@ -299,7 +303,7 @@ export default function AdminDashboard() {
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Name</th>
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Category</th>
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Price (₹)</th>
-              <th className-="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Stock Qty</th>
+              <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Stock Qty</th>
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Description</th>
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Actions</th>
               <th className="px-3 py-3 text-left text-xs font-bold text-cyan-400 uppercase tracking-wider">Restock</th>
@@ -420,5 +424,6 @@ export default function AdminDashboard() {
         </div>
       </Modal>
     </div>
+    </>
   );
 }

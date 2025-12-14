@@ -46,18 +46,18 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-pink-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="p-8 w-full max-w-md">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-2xl border border-pink-100"
+          className="bg-gray-800 p-8 rounded-xl shadow-2xl border border-cyan-800"
         >
-          <h2 className="text-3xl font-extrabold text-pink-700 mb-6 text-center">
+          <h2 className="text-3xl font-extrabold text-white mb-6 text-center tracking-wide">
             Create Sweet Account
           </h2>
 
           {error && (
-            <p className="bg-red-100 text-red-600 border border-red-300 p-3 rounded-lg mb-4 text-sm font-medium">
+            <p className="bg-red-900/50 text-red-400 border border-red-700 p-3 rounded-lg mb-4 text-sm font-medium">
               {error}
             </p>
           )}
@@ -66,8 +66,9 @@ export default function Register() {
             <input
               name="name"
               placeholder="Full Name"
-              className="w-full border-2 border-pink-200 focus:border-pink-500 focus:ring-pink-500 p-3 rounded-lg transition duration-200 placeholder-gray-500 text-lg"
+              className="w-full bg-gray-700 text-white border-2 border-gray-600 focus:border-cyan-500 focus:ring-cyan-500 p-3 rounded-lg transition duration-200 placeholder-gray-400 text-lg"
               onChange={handleChange}
+              value={form.name}
               required
             />
 
@@ -75,17 +76,19 @@ export default function Register() {
               name="email"
               type="email"
               placeholder="Email Address"
-              className="w-full border-2 border-pink-200 focus:border-pink-500 focus:ring-pink-500 p-3 rounded-lg transition duration-200 placeholder-gray-500 text-lg"
+              className="w-full bg-gray-700 text-white border-2 border-gray-600 focus:border-cyan-500 focus:ring-cyan-500 p-3 rounded-lg transition duration-200 placeholder-gray-400 text-lg"
               onChange={handleChange}
+              value={form.email}
               required
             />
 
             <input
               name="password"
               type="password"
-              placeholder="Password (min 6 chars)"
-              className="w-full border-2 border-pink-200 focus:border-pink-500 focus:ring-pink-500 p-3 rounded-lg transition duration-200 placeholder-gray-500 text-lg"
+              placeholder="Password"
+              className="w-full bg-gray-700 text-white border-2 border-gray-600 focus:border-cyan-500 focus:ring-cyan-500 p-3 rounded-lg transition duration-200 placeholder-gray-400 text-lg"
               onChange={handleChange}
+              value={form.password}
               required
             />
           </div>
@@ -93,19 +96,19 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full mt-6 font-bold py-3 rounded-lg text-lg shadow-lg transition duration-300 transform active:scale-95 ${loading
-                ? "bg-pink-300 text-white cursor-not-allowed"
-                : "bg-pink-600 text-white hover:bg-pink-700"
+            className={`w-full mt-6 font-bold py-3 rounded-lg text-lg shadow-lg uppercase transition duration-300 transform active:scale-95 ${loading
+                ? "bg-cyan-800 text-gray-400 cursor-not-allowed"
+                : "bg-cyan-600 text-white hover:bg-cyan-500"
               }`}
           >
             {loading ? "Creating account..." : "Register"}
           </button>
 
-          <p className="text-sm text-center mt-5 text-gray-600">
+          <p className="text-sm text-center mt-5 text-gray-400">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-pink-600 font-semibold underline underline-offset-2 transition duration-200"
+              className="text-cyan-400 font-semibold underline underline-offset-4 transition duration-200 hover:text-cyan-300"
             >
               Login
             </Link>
