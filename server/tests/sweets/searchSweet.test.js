@@ -1,16 +1,9 @@
-require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
-const mongoose = require('mongoose');
-const connectDB = require('../../config/db');
 const Sweet = require('../../models/sweets.model');
 const User = require('../../models/user.model');
 
 let userToken;
-
-beforeAll(async () => {
-    await connectDB();
-});
 
 beforeAll(async () => {
     await User.deleteMany({});
@@ -29,10 +22,6 @@ beforeAll(async () => {
         { name: 'Barfi', category: 'Milk', price: 100, quantity: 5 },
         { name: 'Jalebi', category: 'Sugar', price: 30, quantity: 8 },
     ]);
-});
-
-afterAll(async () => {
-    await mongoose.connection.close();
 });
 
 describe('GET /api/sweets/search', () => {

@@ -1,17 +1,10 @@
-require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
-const mongoose = require('mongoose');
-const connectDB = require('../../config/db');
 const Sweet = require('../../models/sweets.model');
 const User = require('../../models/user.model');
 
 let adminToken;
 let sweetId;
-
-beforeAll(async () => {
-  await connectDB();
-});
 
 beforeEach(async () => {
   await User.deleteMany({});
@@ -34,10 +27,6 @@ beforeEach(async () => {
   });
 
   sweetId = sweet._id;
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
 });
 
 describe('POST /api/sweets/:id/restock', () => {

@@ -1,17 +1,10 @@
-require('dotenv').config({ path: '.env' });
 const request = require('supertest');
 const app = require('../../app');
-const { default: mongoose } = require('mongoose');
-const connectDB = require('../../config/db');
 const Sweet = require('../../models/sweets.model');
 const User = require('../../models/user.model');
 
 let adminToken;
 let userToken;
-
-beforeAll(async () => {
-    await connectDB();
-});
 
 beforeAll(async () => {
     await User.deleteMany({});
@@ -32,10 +25,6 @@ beforeAll(async () => {
 
     adminToken = adminRes.body.token;
     userToken = userRes.body.token;
-});
-
-afterAll(async () => {
-    await mongoose.connection.close();
 });
 
 describe('POST /api/sweets', () => {
@@ -80,6 +69,7 @@ describe('POST /api/sweets', () => {
             });
 
         expect(res.statusCode).toBe(400);
+        console.log(res.body);
     });
 
     it('should fail if price is negative', async () => {

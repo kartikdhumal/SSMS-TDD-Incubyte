@@ -1,18 +1,10 @@
-require('dotenv').config({ path: '.env' });
-
 const request = require('supertest');
 const app = require('../../app');
-const mongoose = require('mongoose');
-const connectDB = require('../../config/db');
 const Sweet = require('../../models/sweets.model');
 const User = require('../../models/user.model');
 
 let adminToken;
 let sweetId;
-
-beforeAll(async () => {
-    await connectDB();
-});
 
 beforeAll(async () => {
   await User.deleteMany({});
@@ -28,10 +20,6 @@ beforeAll(async () => {
   adminToken = adminRes.body.token;
 });
 
-afterAll(async () => {
-    await mongoose.connection.close();
-});
-
 beforeEach(async () => {
   const sweet = await Sweet.create({
     name: 'Barfi',
@@ -41,10 +29,6 @@ beforeEach(async () => {
   });
 
   sweetId = sweet._id.toString();
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
 });
 
 describe('PUT /api/sweets/:id', () => {

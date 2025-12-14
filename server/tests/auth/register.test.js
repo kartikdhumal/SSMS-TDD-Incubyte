@@ -1,21 +1,9 @@
-require('dotenv').config({ path: '.env' });
 const request = require('supertest');
 const app = require('../../app');
-const { default: mongoose } = require('mongoose');
-const connectDB = require('../../config/db');
 const User = require('../../models/user.model');
-
-
-beforeAll(async () => {
-  await connectDB();
-});
 
 beforeEach(async () => {
   await User.deleteMany({});
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
 });
 
 describe('POST /api/auth/register', () => {

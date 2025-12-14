@@ -6,7 +6,7 @@ const { isAdmin } = require('../middleware/admin.middleware');
 const router = express.Router();
 
 router.post('/', protect, isAdmin, sweetController.createSweet);
-router.get('/', protect, isAdmin, sweetController.getAllSweets);
+router.get('/', protect, sweetController.getAllSweets);
 router.put('/:id', protect, isAdmin, sweetController.updateSweet);
 router.delete('/:id', protect, isAdmin, sweetController.deleteSweet);
 router.get('/search', protect, sweetController.searchSweets);
