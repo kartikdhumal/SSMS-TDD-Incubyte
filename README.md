@@ -139,16 +139,16 @@ npm test
 # Test-Driven Development (TDD)
 The backend strictly follows a TDD workflow:
 
-• Write failing test cases
-• Implement minimal logic to pass tests
-• Refactor and harden implementation
+* Write failing test cases
+* Implement minimal logic to pass tests
+* Refactor and harden implementation
 All critical flows (auth, inventory, purchase, admin actions) are covered using Jest + Supertest.
 
 # AI Assistance
 AI tools (ChatGPT, Gemini) were used as development assistants for:
 
-• Clarifying concepts
-• Structuring components and APIs
-• Debugging issues
-• Supporting the TDD workflow
+* Clarifying concepts
+* Structuring components and APIs
+* Debugging issues
+* Supporting the TDD workflow
 
