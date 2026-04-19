@@ -4,6 +4,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 let mongo;
 
 beforeAll(async () => {
+  process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-jwt-secret';
   mongo = await MongoMemoryServer.create();
   const uri = mongo.getUri();
 
@@ -12,7 +13,7 @@ beforeAll(async () => {
 
 // afterEach(async () => {
 //   const collections = await mongoose.connection.db.collections();
-//   for (let collection of collections) {
+//   for (const collection of collections) {
 //     await collection.deleteMany({});
 //   }
 // });
