@@ -3,9 +3,15 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'test' ? 'test-jwt-secret' : null);
+
 
 const registerUser = async (req, res) => {
     try {
+        if (!JWT_SECRET) {
+            return res.status(500).json({ message: 'JWT configuration missing' });
+        }
+
         const { name, email, password, role } = req.body;
 
         if (!name || !email || !password) {
@@ -28,7 +34,7 @@ const registerUser = async (req, res) => {
 
         const token = jwt.sign(
             { id: user._id, role: user.role },
-            process.env.JWT_SECRET,
+            JWT_SECRET,
             { expiresIn: '1d' }
         );
 
@@ -49,6 +55,10 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
+        if (!JWT_SECRET) {
+            return res.status(500).json({ message: 'JWT configuration missing' });
+        }
+
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -67,7 +77,7 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign(
             { id: user._id, role: user.role },
-            process.env.JWT_SECRET,
+            JWT_SECRET,
             { expiresIn: '1d' }
         );
 
